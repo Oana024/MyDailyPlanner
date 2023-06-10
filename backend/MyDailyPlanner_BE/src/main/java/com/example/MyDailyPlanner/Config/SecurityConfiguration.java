@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +36,13 @@ public class SecurityConfiguration {
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+        httpSecurity.cors();
+
+        httpSecurity.headers()
+                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*"))
+                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE"))
+                .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Headers", "Authorization, Origin, Content-Type, Accept"));
 
         return httpSecurity.build();
     }

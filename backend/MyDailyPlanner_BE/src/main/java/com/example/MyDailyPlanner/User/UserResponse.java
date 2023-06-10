@@ -1,4 +1,4 @@
-package com.example.MyDailyPlanner.Auth;
+package com.example.MyDailyPlanner.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
-    private Integer userId;
-    private String token;
+public class UserResponse {
+    private Integer id;
+    private String firstname;
+    private String lastname;
 }

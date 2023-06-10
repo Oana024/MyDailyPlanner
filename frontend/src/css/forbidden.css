@@ -1,0 +1,24 @@
+* {
+    margin:0;
+    padding: 0;
+}
+.content{
+    background-color: #233142;
+    background-size: cover;
+}
+.h403{
+    margin-bottom: 20px;
+    color: #facf5a;
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    font-size: 100px;
+    font-weight: 800;
+}
+.content h2{
+    color: #a2b9dc;
+    text-align: center;
+    font-family: monospace;
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+}

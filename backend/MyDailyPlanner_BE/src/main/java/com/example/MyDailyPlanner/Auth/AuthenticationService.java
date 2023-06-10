@@ -28,9 +28,16 @@ public class AuthenticationService {
                 .role(Role.USER)
                 .build();
         userRepository.save(user);
+
+        Integer userId = 0;
+        var myUser = userRepository.findByEmail(user.getEmail());
+        if(myUser.isPresent())
+            userId = myUser.get().getId();
+
         var jwt = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwt)
+                .userId(userId)
                 .build();
     }
 
@@ -42,9 +49,11 @@ public class AuthenticationService {
                 )
         );
         var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        var userId = user.getId();
         var jwt = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwt)
+                .userId(userId)
                 .build();
     }
 }
