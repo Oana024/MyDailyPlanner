@@ -1,5 +1,7 @@
 package com.example.MyDailyPlanner.User;
 
+import com.example.MyDailyPlanner.Friendship.Friendship;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +30,14 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "firstUser", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Friendship> friendshipsAsFirstUser;
+
+    @OneToMany(mappedBy = "secondUser", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Friendship> friendshipsAsSecondUser;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

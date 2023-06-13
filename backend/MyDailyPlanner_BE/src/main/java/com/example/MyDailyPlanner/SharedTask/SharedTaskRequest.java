@@ -1,6 +1,5 @@
-package com.example.MyDailyPlanner.Task;
+package com.example.MyDailyPlanner.SharedTask;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,19 +9,15 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="task_db")
-public class Task {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    private Integer userId;
+@NoArgsConstructor
+public class SharedTaskRequest {
+    private Integer friendshipId;
     private String title;
     private String description;
     private LocalDate date;
     private String status;
     private String priority;
     private String tag;
+    private int sendTo;
 }

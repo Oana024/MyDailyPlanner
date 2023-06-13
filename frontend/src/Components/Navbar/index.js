@@ -60,8 +60,8 @@ const Navbar = () => {
                                         <PersonCircle className="btn-icon"></PersonCircle>
                                     </button>
                                     <div className={`dropdown-menu ${isDropdownOpen ? "show" : ""}`}>
-                                        <a className="dropdown-item" onClick={handleLogout}>Log Out</a>
-                                        <a className="dropdown-item">Friends</a>
+                                        <a className="dropdown-item" href='/' onClick={handleLogout}>Log Out</a>
+                                        <a className="dropdown-item" href="/friends">Friends</a>
                                     </div>
                                 </ul>
                             </>

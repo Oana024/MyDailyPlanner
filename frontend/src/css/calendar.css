@@ -45,6 +45,26 @@
     height: 100%;
 }
 
+.datepicker-wrapper {
+    position: absolute;
+    z-index: 1;
+    top: 120px;
+    left: 50px;
+    display: flex;
+    margin-bottom: 100px;
+}
+
+.datepicker-wrapper .save-btn{
+    height: 30px;
+    width: 30px;
+    border-style: none;
+    background: none;
+}
+
+.postpone {
+    height: 200px;
+}
+
 @media (max-width: 740px) {
     .taskandcalendar {
         flex-direction: column;

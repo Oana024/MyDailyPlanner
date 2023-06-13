@@ -1,6 +1,5 @@
 package com.example.MyDailyPlanner.Task;
 
-import com.example.MyDailyPlanner.Note.Note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,6 +70,19 @@ public class TaskService {
 
         Task updatedTask = task.get();
         updatedTask.setStatus(status);
+        return updatedTask;
+    }
+
+    @Transactional
+    public Task postpone(int id, LocalDate newDate) {
+        Optional<Task> task = repository.findById(id);
+
+        if(task.isEmpty()){
+            return null;
+        }
+
+        Task updatedTask = task.get();
+        updatedTask.setDate(newDate);
         return updatedTask;
     }
 }

@@ -7,6 +7,7 @@ import Login from "./pages/login";
 import Notes from "./pages/notes";
 import Tasks from "./pages/tasks";
 import Forbidden from "./pages/forbidden";
+import Friends from "./pages/friends";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                 <Route path='/notes' element={<Notes/>}/>
                 <Route path='/tasks' element={<Tasks/>}/>
                 <Route path='/forbidden' element={<Forbidden/>}/>
+                <Route path='/friends' element={<Friends/>}/>
             </Routes>
         </Router>
     );

@@ -24,8 +24,9 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> getAllTasks(){
-        return taskService.getAll();
+    public ResponseEntity <List<Task>> getAllTasks(){
+        List<Task> taskList = taskService.getAll();
+        return ResponseEntity.ok(taskList);
     }
 
     @GetMapping(path = "{id}")
@@ -77,6 +78,15 @@ public class TaskController {
     @PutMapping(path = "/{id}/status={status}")
     public ResponseEntity<Task> updateStatus(@PathVariable("id") int id, @PathVariable("status") String status) {
         Task task = taskService.update(id, status);
+        if(task == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(task);
+    }
+
+    @PutMapping(path = "/{id}/date={date}")
+    public ResponseEntity<Task> postponeTask(@PathVariable("id") int id, @PathVariable("date") LocalDate date) {
+        Task task = taskService.postpone(id, date);
         if(task == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
