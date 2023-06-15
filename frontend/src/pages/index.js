@@ -1,42 +1,47 @@
 import {useEffect, useState} from "react";
+import image from '../images/home-background.jpg'
+import {useWindowSize} from "./useWindowSize";
 
 const Home = () => {
-    const [msg, setMsg] = useState("");
-    const [mail, setMail] = useState("");
+    const [width, height] = useWindowSize();
+    const [isAuth, setIsAuth] = useState(false);
+
     useEffect(() => {
+
         let token = localStorage.getItem('jwt');
+
+        if (token != null) {
+            const tokenInfo = JSON.parse(atob(token.split(".")[1]));
+            if (tokenInfo.exp * 1000 > Date.now()) {
+                setIsAuth(true);
+            }
+        }
         console.log('Bearer ' + token);
 
-        async function fetchData() {
-            await fetch('http://localhost:2426/api/demo', {
-                method: "GET",
-                headers: {
-                    Authorization: 'Bearer ' + token,
-                }
-            }).then(async (response) => {
-                if (response.status === 200) {
-                    let message = await response.text();
-                    setMsg(message)
-                    setMail(localStorage.getItem('email'));
-                    console.log(mail);
-                    console.log(message);
-                } else if (response.status === 403) {
-                    setMsg("You need to log in");
-                } else {
-                    setMsg("Big problem");
-                }
-            }).catch((err) => {
-                setMsg(err.message)
-                console.log(err.message)
-            });
-        }
-
-        fetchData();
-
-    }, [msg, mail]);
+    }, []);
 
     return (
-        <h1>{msg}, {mail}</h1>
+        <div style={{
+            backgroundImage: `url(${image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            height: height - 60,
+            width: width - 17,
+            display: 'flex', justifyContent: 'center', alignItems: 'center',
+        }}>
+            {
+                isAuth ? (
+                    <div>
+                        <h1 style={{fontSize: "100px"}}>Welcome!</h1>
+                    </div>
+                ) : (
+                    <div>
+                        <a href="/sign-up" style={{fontSize: "70px", color: "black"}}>You can create your account
+                            here</a>
+                    </div>
+                )
+            }
+        </div>
     )
 }
 

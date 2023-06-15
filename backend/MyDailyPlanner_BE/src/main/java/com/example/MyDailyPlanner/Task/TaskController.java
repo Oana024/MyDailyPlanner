@@ -66,6 +66,11 @@ public class TaskController {
         return ResponseEntity.ok(taskList);
     }
 
+    @GetMapping(path = "user={id}/between")
+    public ResponseEntity<?> getTasksFromPeriod(@PathVariable("id") int id, @RequestParam("start") LocalDate start, @RequestParam("end") LocalDate end){
+        return ResponseEntity.ok(taskService.findTasksInPeriod(id, start, end));
+    }
+
     @DeleteMapping(path = "{id}")
     public ResponseEntity<Task> deleteById(@PathVariable("id") int id){
         Task task = taskService.deleteById(id);

@@ -55,9 +55,9 @@ public class SharedTaskService {
             return false;
         }
 
-        sharedTask.get().setStatus("accepted");
-
         Optional<Friendship> friendship = friendshipRepository.findById(sharedTask.get().getFriendship().getId());
+
+        sharedTask.get().setStatus("accepted");
 
         if(friendship.isEmpty()){
             return false;
@@ -66,17 +66,26 @@ public class SharedTaskService {
         int user1Id = friendship.get().getFirstUser().getId();
         int user2Id = friendship.get().getSecondUser().getId();
 
-        Task task = new Task();
-        task.setUserId(user1Id);
-        task.setTitle(sharedTask.get().getTitle());
-        task.setDescription(sharedTask.get().getDescription());
-        task.setDate(sharedTask.get().getDate());
-        task.setStatus("waiting");
-        task.setPriority(sharedTask.get().getPriority());
+        Task task1 = new Task();
+        task1.setUserId(user1Id);
+        task1.setTitle(sharedTask.get().getTitle());
+        task1.setDescription(sharedTask.get().getDescription());
+        task1.setDate(sharedTask.get().getDate());
+        task1.setStatus("waiting");
+        task1.setPriority(sharedTask.get().getPriority());
 
-        taskRepository.save(task);
-        task.setUserId(user2Id);
-        taskRepository.save(task);
+        taskRepository.save(task1);
+
+        Task task2 = new Task();
+        task2.setUserId(user2Id);
+        task2.setTitle(sharedTask.get().getTitle());
+        task2.setDescription(sharedTask.get().getDescription());
+        task2.setDate(sharedTask.get().getDate());
+        task2.setStatus("waiting");
+        task2.setPriority(sharedTask.get().getPriority());
+
+
+        taskRepository.save(task2);
 
         return true;
     }

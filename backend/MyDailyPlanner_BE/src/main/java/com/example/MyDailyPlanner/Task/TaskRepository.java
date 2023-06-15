@@ -17,4 +17,9 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     @Query("SELECT DISTINCT t.tag FROM Task t WHERE t.userId = ?1")
     List<String> findDistinctTagsByUser(int id);
 
+    Optional<List<Task>> findByDateBetweenAndUserId(LocalDate startDate, LocalDate endDate, int userId);
+
+    int countByDateBetweenAndUserIdAndStatus(LocalDate startDate, LocalDate endDate, int userId, String status);
+
+    int countTaskByDateBetweenAndUserId(LocalDate startDate, LocalDate endDate, int userId);
 }

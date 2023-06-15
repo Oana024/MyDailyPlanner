@@ -46,7 +46,6 @@ public class TaskService {
     public Task deleteById(int id) {
         Optional<Task> task = repository.findById(id);
         if(task.isEmpty()) {
-            //throw new IllegalStateException("task with id " + id + " does not exists");
             return null;
         }
         repository.deleteById(id);
@@ -58,6 +57,13 @@ public class TaskService {
         tags = tags.stream().filter(Objects::nonNull)
                 .collect(Collectors.toList());
         return tags;
+    }
+
+    public Stat findTasksInPeriod(int id, LocalDate startDate, LocalDate endDate) {
+        int totalTasks = repository.countTaskByDateBetweenAndUserId(startDate, endDate, id);
+        int completedTasks = repository.countByDateBetweenAndUserIdAndStatus(startDate, endDate, id, "completed");
+
+        return new Stat(totalTasks, completedTasks);
     }
 
     @Transactional

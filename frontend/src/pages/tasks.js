@@ -3,13 +3,16 @@ import {useEffect, useState} from "react";
 import 'react-calendar/dist/Calendar.css';
 import "../css/calendar.css"
 import {CalendarEventFill, CheckSquareFill, XSquareFill} from "react-bootstrap-icons";
-import Modal from "react-modal";
+import {Modal, Button} from 'react-bootstrap';
 import moment from "moment";
 import CreatableSelect from "react-select/creatable";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import image from '../images/background.jpg'
+import {useWindowSize} from "./useWindowSize";
 
 const Tasks = () => {
+    const [width, height] = useWindowSize();
     const [value, onChange] = useState(new Date());
     const [tasks, setTasks] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -206,114 +209,137 @@ const Tasks = () => {
     }
 
     return (
-
-        <div className="taskandcalendar">
-            <div className="calendar">
-                <Calendar onChange={onChange} value={value}/>
-            </div>
-            <div className="tasks">
-                <div>
-                    <button className="btn btn-primary" style={{marginBlockEnd: "10px", marginBlockStart: "10px"}}
-                            onClick={openModal}>Add a new task
-                    </button>
+        <div style={{
+            backgroundImage: `url(${image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minWidth: width - 17,
+             minHeight: height
+        }}>
+            <div className="taskandcalendar">
+                <div className="calendar">
+                    <Calendar onChange={onChange} value={value}/>
                 </div>
-                {
-                    tasks ? (
-                        tasks.map((task, index) => (
-                            task.status === "waiting" ? (
-                                <div key={index} className="card task" style={{marginBottom: showDatePicker && task.id === taskToBePostponed ? "300px" : "20px"}}>
-                                    <div className="card-header"
-                                         style={{backgroundColor: task.priority, fontWeight: "bold", fontSize: "18px"}}>
-                                        {task.title}
-                                        <div className="buttons">
-                                            <button className="btn">
-                                                <CalendarEventFill className="btn-icon-task"
-                                                                   style={{color: "#ffc75a"}}
-                                                                   onClick={() => handleButtonClick(task.id)}></CalendarEventFill>
-                                            </button>
-                                            <button className="btn btn">
-                                                <CheckSquareFill className="btn-icon-task" style={{color: "#64d256"}}
-                                                                 onClick={() => completeTask(task.id)}></CheckSquareFill>
-                                            </button>
-                                            <button className="btn btn">
-                                                <XSquareFill className="btn-icon-task" style={{color: "#d6deff"}}
-                                                             onClick={() => removeTask(task.id)}></XSquareFill>
-                                            </button>
-                                        </div>
-                                        {showDatePicker && taskToBePostponed === task.id && (
-                                            <div className="datepicker-wrapper" style={{marginBottom: "100px"}}>
-                                                <DatePicker selected={newDate} onChange={handleDateChange}
-                                                            open={showDatePicker}
-                                                    // onClickOutside={() => setShowDatePicker(false)}
-                                                            minDate={Date.now()}
-                                                />
-                                                <button className="save-btn" onClick={() => postponeTask(task.id)}>
-                                                    <CheckSquareFill
-                                                        style={{color: "#12bc24", width: "100%", height: "100%"}}>
-                                                    </CheckSquareFill>
+                <div className="tasks">
+                    <div>
+                        <button className="btn btn-primary" style={{marginBlockEnd: "10px", marginBlockStart: "10px"}}
+                                onClick={openModal}>Add a new task
+                        </button>
+                    </div>
+                    {
+                        tasks ? (
+                            tasks.map((task, index) => (
+                                task.status === "waiting" ? (
+                                    <div key={index} className="card task"
+                                         style={{marginBottom: showDatePicker && task.id === taskToBePostponed ? "300px" : "20px"}}>
+                                        <div className="card-header"
+                                             style={{
+                                                 backgroundColor: task.priority,
+                                                 fontWeight: "bold",
+                                                 fontSize: "18px"
+                                             }}>
+                                            {task.title}
+                                            <div className="buttons">
+                                                <button className="btn">
+                                                    <CalendarEventFill className="btn-icon-task"
+                                                                       style={{color: "#ffc75a"}}
+                                                                       onClick={() => handleButtonClick(task.id)}></CalendarEventFill>
+                                                </button>
+                                                <button className="btn btn">
+                                                    <CheckSquareFill className="btn-icon-task"
+                                                                     style={{color: "#64d256"}}
+                                                                     onClick={() => completeTask(task.id)}></CheckSquareFill>
+                                                </button>
+                                                <button className="btn btn">
+                                                    <XSquareFill className="btn-icon-task" style={{color: "#d6deff"}}
+                                                                 onClick={() => removeTask(task.id)}></XSquareFill>
                                                 </button>
                                             </div>
-                                        )}
+                                            {showDatePicker && taskToBePostponed === task.id && (
+                                                <div className="datepicker-wrapper" style={{marginBottom: "100px"}}>
+                                                    <DatePicker selected={newDate} onChange={handleDateChange}
+                                                                open={showDatePicker}
+                                                        // onClickOutside={() => setShowDatePicker(false)}
+                                                                minDate={Date.now()}
+                                                    />
+                                                    <button className="save-btn" onClick={() => postponeTask(task.id)}>
+                                                        <CheckSquareFill
+                                                            style={{color: "#12bc24", width: "100%", height: "100%"}}>
+                                                        </CheckSquareFill>
+                                                    </button>
+                                                </div>
+                                            )}
 
+                                        </div>
+                                        <div className="card-body">
+                                            <p className="card-text">
+                                                {task.description}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div className="card-body">
-                                        <p className="card-text">
-                                            {task.description}
-                                        </p>
-                                    </div>
-                                </div>
-                            ) : (
-                                <></>
-                            )
-                        ))
-                    ) : (
-                        <h1>Waiting</h1>
-                    )
+                                ) : (
+                                    <></>
+                                )
+                            ))
+                        ) : (
+                            <h1>Waiting</h1>
+                        )
 
-                }
+                    }
+                </div>
+
+                <Modal show={modalIsOpen} onHide={closeModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add Task</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                            <div className="form-group">
+                                <label>Title</label>
+                                <input type="text" name="title" value={newTask.title} onChange={handleInputChange}
+                                       className="form-control" required={true}/>
+                            </div>
+                            <div className="form-group">
+                                <label>Description</label>
+                                <textarea name="description" value={newTask.content} onChange={handleInputChange}
+                                          className="form-control"></textarea>
+                            </div>
+                            <div>
+                                <label>Select task priority</label>
+                                <select id="priority" name="priority" className="form-control" onChange={handleInputChange}>
+                                    <option value="#4a9eb5" label="Optional">Optional</option>
+                                    <option value="#f1630e" label="Important">Important</option>
+                                    <option value="#ff2d31" label="Urgent">Urgent</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Select/Add a tag</label>
+                                <CreatableSelect
+                                    className="basic-single"
+                                    classNamePrefix="select"
+                                    name="tag"
+                                    defaultValue={null}
+                                    onChange={(selectedOption) => handleInputChange({
+                                        target: {
+                                            value: selectedOption.value,
+                                            name: 'tag'
+                                        }
+                                    })}
+                                    isSearchable={true}
+                                    options={tags}
+                                />
+                            </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={closeModal}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={addTask}>
+                            Save
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
             </div>
-
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} ariaHideApp={false}>
-                <h2>Add task</h2>
-                <div className="form-group">
-                    <label>Title</label>
-                    <input type="text" name="title" value={newTask.title} onChange={handleInputChange}
-                           className="form-control"/>
-                </div>
-                <div className="form-group">
-                    <label>Description</label>
-                    <textarea name="description" value={newTask.content} onChange={handleInputChange}
-                              className="form-control"></textarea>
-                </div>
-                <div>
-                    <label>Select task priority</label>
-                    <select id="priority" name="priority" className="form-control" onChange={handleInputChange}>
-                        <option value="#4a9eb5" label="Optional">Optional</option>
-                        <option value="#f1630e" label="Important">Important</option>
-                        <option value="#ff2d31" label="Urgent">Urgent</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Select/Add a tag</label>
-                    <CreatableSelect
-                        className="basic-single"
-                        classNamePrefix="select"
-                        name="tag"
-                        defaultValue={null}
-                        onChange={(selectedOption) => handleInputChange({
-                            target: {
-                                value: selectedOption.value,
-                                name: 'tag'
-                            }
-                        })}
-                        isSearchable={true}
-                        options={tags}
-                    />
-                </div>
-                <button className="btn btn-primary" onClick={addTask}>Add</button>
-                <button className="btn btn-secondary" onClick={closeModal}>Close</button>
-            </Modal>
-
         </div>
 
     )

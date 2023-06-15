@@ -26,7 +26,7 @@ public class NoteService {
     }
 
     public List<Note> getUserNotes(int userId) {
-        Optional<List<Note>> notes = repository.findNoteByUserId(userId);
+        Optional<List<Note>> notes = repository.findNoteByUserIdOrderById(userId);
         return notes.orElse(null);
     }
 

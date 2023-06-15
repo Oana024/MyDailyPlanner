@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface NoteRepository extends JpaRepository<Note, Integer> {
-    Optional<List<Note>> findNoteByUserId(int id);
+    Optional<List<Note>> findNoteByUserIdOrderById(int id);
+
 }

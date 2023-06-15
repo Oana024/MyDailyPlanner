@@ -54,6 +54,9 @@ const Navbar = () => {
                                 <li className="nav-item">
                                     <a className="nav-link" href="/tasks">Tasks</a>
                                 </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/friends">Friends</a>
+                                </li>
                             </ul>
                                 <ul className="navbar-nav ms-auto">
                                     <button className="button btn btn-dark btn-xl dropdown" tabIndex="0" onClick={toggleDropdown}>
@@ -61,7 +64,7 @@ const Navbar = () => {
                                     </button>
                                     <div className={`dropdown-menu ${isDropdownOpen ? "show" : ""}`}>
                                         <a className="dropdown-item" href='/' onClick={handleLogout}>Log Out</a>
-                                        <a className="dropdown-item" href="/friends">Friends</a>
+                                        <a className="dropdown-item" href="/profile">Profile</a>
                                     </div>
                                 </ul>
                             </>

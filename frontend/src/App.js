@@ -8,6 +8,7 @@ import Notes from "./pages/notes";
 import Tasks from "./pages/tasks";
 import Forbidden from "./pages/forbidden";
 import Friends from "./pages/friends";
+import Profile from "./pages/profile";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path='/tasks' element={<Tasks/>}/>
                 <Route path='/forbidden' element={<Forbidden/>}/>
                 <Route path='/friends' element={<Friends/>}/>
+                <Route path='/profile' element={<Profile/>}/>
             </Routes>
         </Router>
     );
